@@ -1,7 +1,7 @@
 class SearchController < ApplicationController
     def search
         kw = params[:keyword]
-        key = "AIzaSyCJnbJOW8x3cQhYMQgR4kVuCw9JD3KFpBo"
+        key = ENV["GOOGLE_KEY"]
         location = "35.469716,139.629184"
         # hash形式でパラメタ文字列を指定し、URL形式にエンコード
         params = URI.encode_www_form({key: key, location: location, radius: 5000, keyword: kw})

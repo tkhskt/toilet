@@ -1,7 +1,7 @@
 class ToiletsController < ApplicationController
     def description
         placeId = params[:id]
-        key = "AIzaSyCJnbJOW8x3cQhYMQgR4kVuCw9JD3KFpBo"
+        key = ENV["GOOGLE_KEY"]
         # hash形式でパラメタ文字列を指定し、URL形式にエンコード
         params = URI.encode_www_form({placeid: placeId,key: key})
         # URIを解析し、hostやportをバラバラに取得できるようにする
