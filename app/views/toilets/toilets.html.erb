@@ -42,10 +42,10 @@
 
                 <div class="postReviewContainer">
                     <p class="postReviewTitle">レビューですよ</p>
-                    <%= form_for @review, :id => "my_form" do|r| -%>
-                      Title: <%= r.text_field_tag(:title) %>
-                      Comment: <%= r.text_area_tag(:message, :rows => 4, :cols => 50) %>
-                      <%= r.submit %>
+                    <%= form_tag(reviews_path, method: :post) do -%>
+                      評価: <%= select_tag :valuation, options_for_select(["1", "2", "3", "4", "5"]) %>
+                      Comment: <%= text_area_tag(:message) %>
+                      <%= submit_tag "投稿", data: { disable_with: "送信済" }%>
                     <% end -%>
                 </div>
 
