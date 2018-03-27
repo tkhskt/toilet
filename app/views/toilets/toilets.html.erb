@@ -1,0 +1,73 @@
+<html>
+    <head>
+        <meta charset=“UFT-8”>
+        <title>CSS</title>
+        <%= stylesheet_link_tag 'top', media: 'all', 'data-turbolinks-track': 'reload' %>
+        <%= stylesheet_link_tag 'header', media: 'all', 'data-turbolinks-track': 'reload' %>
+        <%= stylesheet_link_tag 'body', media: 'all', 'data-turbolinks-track': 'reload' %>
+        <!--
+        <link rel="stylesheet" type="text/css" href="header.css">
+        <link rel="stylesheet" type="text/css" href="body.css">
+        <link rel="stylesheet" type="text/css" href="top.css">
+        -->
+    </head>
+    <body>
+        <div class="header">
+            <div class="headerContainer">
+                <div class="headerTitle">
+                    トイレビュー
+                </div>
+                <%= form_tag("/search", method: "get", id: "form02") do %>
+                  <%= text_field_tag(:keyword, "",id:'input02') %>
+                <% end %>
+                
+            </div>
+        </div>
+
+        <div class="toiletBodyContainer">
+                <div class="toiletDescriptionContainer">
+                    <%= image_tag @result["icon"], class: 'toiletDescriptionImage' %>
+                    <div class="toiletDescriptionText">
+                        <p class="toiletDescriptionName">
+                            <%= @result["name"] %>
+                        </p>
+                        <p class="toiletDescriptionAddress">
+                            <%= @result["formatted_address"] %>
+                        </p>
+                        <p class="toiletDescriptionDescription">
+                            <%= @result["description"]%>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="postReviewContainer">
+                    <p class="postReviewTitle">レビューですよ</p>
+                    <%= form_for @review, :id => "my_form" do|r| -%>
+                      Title: <%= r.text_field_tag(:title) %>
+                      Comment: <%= r.text_area_tag(:message, :rows => 4, :cols => 50) %>
+                      <%= r.submit %>
+                    <% end -%>
+                </div>
+
+                <div class="toiletReviewsContainer">
+                    <p class="toiletDesctiptionReviewsTitle">レビュー</p>
+                    <ul class="toiletDescriptionReviewsList">
+                        <% @reviews.each do |r| %>
+                            <li class="toiletDescriptionReviewContent">
+                                <p class="reviewerName"> 
+                                    <%= r["name"] %>
+                                </p>
+                                <div class="valuation">
+                                    <%= r["valuation"] %>
+                                </div>
+                                <div class="reviewText">
+                                    <%= r["message"]%>
+                                </div>
+                            </li>
+                        <% end %>
+                    </ul>
+                </div>
+            
+        </div>
+    </body>
+</html>

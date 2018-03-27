@@ -34,7 +34,7 @@ class SearchController < ApplicationController
                     result[index]["valuation"] = 0.0
                 end
             }
-            logger.debug(resp["results"][0])
+        
             render 'search/search'
           when Net::HTTPRedirection
             message = "Redirection: code=#{response.code} message=#{response.message}"
