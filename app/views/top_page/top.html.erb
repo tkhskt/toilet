@@ -1,0 +1,115 @@
+<html>
+    <head>
+        <meta charset=“UFT-8”>
+        <title>CSS</title>
+        <%= stylesheet_link_tag 'top', media: 'all', 'data-turbolinks-track': 'reload' %>
+        <%= stylesheet_link_tag 'header', media: 'all', 'data-turbolinks-track': 'reload' %>
+        <%= stylesheet_link_tag 'body', media: 'all', 'data-turbolinks-track': 'reload' %>
+        <!--
+        <link rel="stylesheet" type="text/css" href="header.css">
+        <link rel="stylesheet" type="text/css" href="body.css">
+        <link rel="stylesheet" type="text/css" href="top.css">
+        -->
+    </head>
+    <body>
+        <div class="header">
+            <div class="headerContainer">
+                <div class="headerTitle">
+                    トイレビュー
+                </div>
+                <!--
+                <form id="form02" action="#">
+                    <input id="input02" type="text" placeholder="検索">
+                    <input id="submit02" type="submit" value="">
+                </form>
+                -->
+               
+                <%= form_tag("/search", method: "get", id: "form02") do %>
+                  <%= text_field_tag(:keyword, "",id:'input02') %>
+                <% end %>
+                
+            </div>
+        </div>
+
+        <div class="bodyContainer">
+                <div class="pupularToilet">
+                    <h2 class="trendTitle">トレンド</h2>
+                    <ul class="popularToiletList">
+                        <li class="pupularToiletContent">
+                                <img class="toiletImage" src="toilet_sample.jpg"/>
+                                <div class="toiletText">
+                                    <p class="toiletName">
+                                        駅前トイレ
+                                    </p>
+                                    <div class="toiletDescription">
+                                        まあまあ綺麗だがそこはかとなく臭う
+                                    </div>
+                                </div>
+                        </li>
+                        <li class="pupularToiletContent">
+                                <img class="toiletImage" src="toilet_sample.jpg"/>
+                                <div class="toiletText">
+                                    <p class="toiletName">
+                                        駅前トイレ
+                                    </p>
+                                    <div class="toiletDescription">
+                                        まあまあ綺麗だがそこはかとなく臭う
+                                    </div>
+                                </div>
+                        </li>
+                        <li class="pupularToiletContent">
+                                <img class="toiletImage" src="toilet_sample.jpg"/>
+                                <div class="toiletText">
+                                    <p class="toiletName">
+                                        駅前トイレ
+                                    </p>
+                                    <div class="toiletDescription">
+                                        まあまあ綺麗だがそこはかとなく臭う
+                                    </div>
+                                </div>
+                        </li>
+                        <li class="pupularToiletContent">
+                                <img class="toiletImage" src="toilet_sample.jpg"/>
+                                <div class="toiletText">
+                                    <p class="toiletName">
+                                        駅前トイレ
+                                    </p>
+                                    <div class="toiletDescription">
+                                        まあまあ綺麗だがそこはかとなく臭う
+                                    </div>
+                                </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="userRanking">
+                    <ul class="userRankingList">
+                        <h2 class="userRankingTitle">ユーザーランキング</h2>
+                        <li class="userContent">
+                            <p class="rank">1</p>
+                            <img class="userImage" src="userIcon.jpg"/>
+                            <p class="userName">トイレ大好き好き君</p>
+                        </li>
+                        <li class="userContent">
+                            <p class="rank">2</p>
+                            <img class="userImage" src="userIcon.jpg"/>
+                            <p class="userName">トイレ大好き好き君</p>
+                        </li>
+                        <li class="userContent">
+                                <p class="rank">3</p>
+                                <img class="userImage" src="userIcon.jpg"/>
+                                <p class="userName">トイレ大好き好き君</p>
+                        </li>
+                        <li class="userContent">
+                                <p class="rank">4</p>
+                                <img class="userImage" src="userIcon.jpg"/>
+                                <p class="userName">トイレ大好き好き君</p>
+                        </li>
+
+                    </ul>
+                    
+                </div>
+            </div>
+        </div>
+    
+    </body>
+</html>

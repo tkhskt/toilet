@@ -1,0 +1,2 @@
+class UsersToilet < ApplicationRecord
+end
