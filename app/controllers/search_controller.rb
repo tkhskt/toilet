@@ -36,12 +36,14 @@ class SearchController < ApplicationController
             resp["results"].each_with_index do |value, index| 
                 p = value
                 r = Toilet.find_by(google_id: value["place_id"])
-                
                 if r != nil then 
                     p["name"] = r.name
-                    p["icon"] = r.image_path
                     p["description"] = r.description
                     p["valuation"] = r.valuation
+                    if r.image_path != nil then
+                       logger.debug("ここですね")
+                    end
+                    p["icon"] = r.image_path #"https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png"
                 else
                     p["description"] = ""
                     p["valuation"] = 0.0

@@ -5,8 +5,9 @@ class ReviewsController < ApplicationController
         toiletId = params[:toiletId]
         t = Toilet.find_by(google_id: toiletId)
        
-        if t.nil? 
+        if t.nil? then
             toiletByGoogle = Toilet.getToiletInfoByToiletId(toiletId)
+            
             Toilet.create(
                 name: toiletByGoogle["name"],
                 google_id: toiletId,
@@ -17,6 +18,8 @@ class ReviewsController < ApplicationController
                 description: "",
                 valuation: valuation,
             )
+            t.image_path = Rails.root.join("public/default.jpg").open
+            t.save()
         end
         t = Toilet.find_by(google_id: toiletId)
 
