@@ -6,5 +6,7 @@ Rails.application.routes.draw do
 
   post '/reviews', to: 'reviews#post', as: 'reviews'
 
+  post '/edit', to: "toilets#edit", as: 'edit'
+
   devise_for :users, controllers: { :omniauth_callbacks => "omniauth_callbacks" }
 end

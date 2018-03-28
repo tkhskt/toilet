@@ -8,6 +8,9 @@ end
 gem 'devise'
 gem 'omniauth-twitter'
 
+gem 'activesupport'
+gem 'xml-simple'
+
 gem 'dotenv-rails'
 
 gem 'mysql2', '~> 0.4.0'

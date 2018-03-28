@@ -1,10 +1,17 @@
+require 'xmlsimple'
+
 class SearchController < ApplicationController
     def search
-        kw = params[:keyword]
+        keyword = params[:keyword]
         key = ENV["GOOGLE_KEY"]
-        location = "35.469716,139.629184"
+        geoPoint = Toilet.getPlaceByKeyWord(keyword)
+        lat = geoPoint["coordinate"][0]["lat"][0]
+        lng = geoPoint["coordinate"][0]["lng"][0]
+        location = lat + "," + lng
+        
+
         # hash形式でパラメタ文字列を指定し、URL形式にエンコード
-        params = URI.encode_www_form({key: key, location: location, radius: 5000, keyword: kw})
+        params = URI.encode_www_form({key: key, location: location, radius: 5000, keyword: "トイレ"})
         # URIを解析し、hostやportをバラバラに取得できるようにする
         uri = URI.parse("https://maps.googleapis.com/maps/api/place/nearbysearch/json?#{params}")
         # リクエストパラメタを、インスタンス変数に格納

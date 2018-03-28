@@ -12,24 +12,7 @@
         -->
     </head>
     <body>
-        <div class="header">
-            <div class="headerContainer">
-                <div class="headerTitle">
-                    トイレビュー
-                </div>
-                <!--
-                <form id="form02" action="#">
-                    <input id="input02" type="text" placeholder="検索">
-                    <input id="submit02" type="submit" value="">
-                </form>
-                -->
-               
-                <%= form_tag("/search", method: "get", id: "form02") do %>
-                  <%= text_field_tag(:keyword, "",id:'input02') %>
-                <% end %>
-                
-            </div>
-        </div>
+        <%= render partial: "components/header" %>
 
         <div class="bodyContainer">
                 <div class="pupularToilet">

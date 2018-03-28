@@ -12,28 +12,7 @@
         -->
     </head>
     <body>
-        <div class="header">
-            <div class="headerContainer">
-                <div class="headerTitle">
-                    トイレビュー
-                </div>
-                <nav>
-                    <% if user_signed_in? %>
-                        <%= link_to 'プロフィール変更', edit_user_registration_path %>
-                        <%= link_to 'ログアウト', destroy_user_session_path, method: :delete %>
-                    <% else %>
-                        <%= link_to 'サインアップ', new_user_registration_path %>
-                        <%= link_to 'ログイン', new_user_session_path %>
-                    <% end %>
-                </nav>
-               
-                <%= form_tag("/search", method: "get", id: "form02") do %>
-                  <%= text_field_tag(:keyword, "",id:'input02') %>
-                <% end %>
-                
-            </div>
-        </div>
-
+        <%= render partial: "components/header" %>
         <div class="bodyContainer">
                 <div class="pupularToilet">
                     <h2 class="trendTitle">トレンド</h2>

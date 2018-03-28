@@ -10,14 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180327121827) do
+ActiveRecord::Schema.define(version: 20180328011924) do
 
   create_table "reviews", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "toilet_id", null: false
     t.integer "user_id", null: false
     t.float "valuation", limit: 24
     t.string "message"
-    t.datetime "updated_at", null: false
     t.datetime "created_at", null: false
   end
 

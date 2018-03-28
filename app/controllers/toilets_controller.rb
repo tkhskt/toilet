@@ -16,15 +16,26 @@ class ToiletsController < ApplicationController
           h.read_timeout = 10
           h.get(uri.request_uri)
         end
-        @reviews = {}
-        @review = {}
-    
+       
+        @toiletId = placeId
+        toilet = Toilet.find_by(google_id: placeId)
+        @reviews = []
+        if !toilet.nil? 
+            res = Review.select(Arel.star).where(Review.arel_table[:toilet_id].eq(toilet.id)).joins(
+                Review.arel_table.join(User.arel_table).on(
+                  User.arel_table[:id].eq(Review.arel_table[:user_id])
+                ).join_sources
+              )
+            @reviews = res.as_json
+        end    
+        
+
         begin
           case response
           when Net::HTTPSuccess # 結果の受け取り
             resp = JSON.load(response.body)
             @result = resp["result"]
-            logger.debug(@result)
+            
             
             r = Toilet.findToiletsByGoogleId(placeId)
             if r != nil then 
@@ -44,8 +55,11 @@ class ToiletsController < ApplicationController
             render 'toilets/toilets'
           end
         rescue => e
-          logger.debug(e.message)
+          
           render 'toilets/toilets'
         end
+    end
+
+    def edit
     end
 end
