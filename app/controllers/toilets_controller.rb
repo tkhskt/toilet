@@ -48,6 +48,8 @@ class ToiletsController < ApplicationController
                 @result["valuation"] = 0.0
                 @result["icon"] = "/default.jpg"
             end
+            
+            @list = Toilet.new.getToiletList(@result["geometry"]["location"]["lat"],@result["geometry"]["location"]["lng"])
         
             render 'toilets/toilets'
           when Net::HTTPRedirection
@@ -58,7 +60,7 @@ class ToiletsController < ApplicationController
             render 'toilets/toilets'
           end
         rescue => e
-          
+          logger.debug(e)
           render 'toilets/toilets'
         end
     end

@@ -22,18 +22,23 @@
         
         <%= render partial: "components/header" %>
 
-        <div class="toiletBodyContainer">
-                <div class="toiletDescriptionContainer">
-                    <%= image_tag @result["icon"], class: 'toiletDescriptionImage' %>
-                    <div class="toiletDescriptionText">
-                        <p class="toiletDescriptionName">
-                            <%= @result["name"] %>
-                        </p>
+        <div class="toiletDescriptionTextContainer">
+                <div class="toiletDescriptionText">
+                        <h2 class="toiletDescriptionName">
+                                <%= @result["name"] %>
+                        </h2>
                         <p class="toiletDescriptionAddress">
                             <%= @result["formatted_address"] %>
                         </p>
+                </div>     
+        </div>
+        <div class="toiletBodyContainer">
+                
+                <div class="toiletDescriptionContainer">
+                    <div class="toiletInfo">
+                        <%= image_tag @result["icon"], class: 'toiletDescriptionImage' %>
                         <p class="toiletDescriptionDescription">
-                            <%= @result["description"]%>
+                                <%= @result["description"]%>
                         </p>
                     </div>
                     <div id="map"></div>
@@ -57,48 +62,70 @@
                     </script>
 
                     <% if user_signed_in? %>
-                        <%= form_tag(bookmarks_path, method: :post, id: "bookmarkButton") do -%>
-                            <%= hidden_field_tag :toiletId , @toiletId %>
-                            <%= submit_tag "ブックマーク", data: { disable_with: "送信済" }%>
-                        <% end -%>
+                        <div class="buttonContainer">
+                            <%= form_tag(bookmarks_path, method: :post, id: "bookmarkButton") do -%>
+                                <%= hidden_field_tag :toiletId , @toiletId %>
+                                <%= submit_tag "ブックマーク", data: { disable_with: "送信済" }, id: :bookmarkSubmitButton %>
+                            <% end -%>
 
-                        <input type="button" value="編集する" id="showTextAreaButton">
+                            <input type="button" value="編集する" id="showTextAreaButton">
+                        </div> 
                         <%= form_tag(edit_path, method: :post,id: "editArea",style: "display: none;",:multipart => true) do -%>
-                          名前: <%= text_field_tag(:toiletName) %>
-                          説明: <%= text_area_tag(:toiletDescription) %>
-                          画像: <%= file_field_tag(:image_path) %>
+                            <p class="toilet">トイレの名前</p>
+                            <%= text_field_tag(:toiletName, "",class: :nameField) %>
+                            <p class="toilet">トイレの説明</p>
+                            <%= text_area_tag(:toiletDescription, "",class: :descriptionField) %>
+                            <%= file_field_tag(:image_path) %>
                           <%= hidden_field_tag :toiletId , @toiletId %>
-                          <%= submit_tag "投稿", data: { disable_with: "送信済" }%>
+                          <%= submit_tag "投稿", data: { disable_with: "送信済" },id: :submitDescriptionButton %>
                         <% end -%>
+                        
                     <% end %>
-                </div>
-                <% if user_signed_in? %>
+                    <% if user_signed_in? %>
                     <div class="postReviewContainer">
-                        <p class="postReviewTitle">レビューですよ</p>
-                        <%= form_tag(reviews_path, method: :post) do -%>
-                          評価: <%= select_tag :valuation, options_for_select(["1", "2", "3", "4", "5"]) %>
-                          Comment: <%= text_area_tag(:message) %>
-                          <%= hidden_field_tag :toiletId , @toiletId %>
-                          <%= submit_tag "投稿", data: { disable_with: "送信済" }%>
-                        <% end -%>
-                    </div>
-                <% end %>
+                        <p class="postReviewTitle">レビュー</p>
+                            <%= form_tag(reviews_path, method: :post) do -%>
+                              <%= select_tag :valuation, options_for_select(["1", "2", "3", "4", "5"]), id: :valuationInput %>
+                              <%= text_area_tag(:message,"",id: :reviewMessage) %>
+                              <%= hidden_field_tag :toiletId , @toiletId %>
+                              <%= submit_tag "投稿", data: { disable_with: "送信済" }, id: :submitReviewButton %>
+                            <% end -%>
+                        </div>
+                    <% end %>
 
-                <div class="toiletReviewsContainer">
-                    <p class="toiletDesctiptionReviewsTitle">レビュー</p>
-                    <ul class="toiletDescriptionReviewsList">
-                        <% @reviews.each do |r| %>
-                            <li class="toiletDescriptionReviewContent">
-                                <p class="reviewerName"> 
-                                    <%= r["username"] %>
+                    <div class="toiletReviewsContainer">
+                        <ul class="toiletDescriptionReviewsList">
+                            <% @reviews.each do |r| %>
+                                <li class="toiletDescriptionReviewContent">
+                                    <%= image_tag r["image_url"], id: :userIcon%>
+                                    <div class="userReviewTextContainer">
+                                            <p class="reviewerName"> 
+                                                <%= r["username"] %>
+                                            </p>
+                                            <div class="valuation">
+                                                <%= r["valuation"] %>
+                                            </div>
+                                            <div class="reviewText">
+                                                <%= r["message"]%>
+                                            </div>
+                                    </div>
+                                </li>
+                            <% end %>
+                        </ul>
+                    </div>
+                </div>
+                <div class="nearToiletsContainer">
+                    <h3>周辺のトイレ</h3>
+                    <ul>
+                        <% @list.each do |r| %>
+                        <li class="nearToiletContent">
+                            <%= image_tag r["icon"], class: 'nearToiletContentImage' %>
+                            <div class="toiletText">
+                                <p class="toiletName">
+                                    <%= link_to(r["name"], toilet_path(r["place_id"]))%>
                                 </p>
-                                <div class="valuation">
-                                    <%= r["valuation"] %>
-                                </div>
-                                <div class="reviewText">
-                                    <%= r["message"]%>
-                                </div>
-                            </li>
+                            </div>
+                        </li>
                         <% end %>
                     </ul>
                 </div>
