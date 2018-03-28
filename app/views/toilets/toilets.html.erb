@@ -32,6 +32,11 @@
                         </p>
                     </div>
                     <% if user_signed_in? %>
+                        <%= form_tag(bookmarks_path, method: :post, id: "bookmarkButton") do -%>
+                            <%= hidden_field_tag :toiletId , @toiletId %>
+                            <%= submit_tag "ブックマーク", data: { disable_with: "送信済" }%>
+                        <% end -%>
+
                         <input type="button" value="編集する" id="showTextAreaButton">
                         <%= form_tag(edit_path, method: :post,id: "editArea",style: "display: none;",:multipart => true) do -%>
                           名前: <%= text_field_tag(:toiletName) %>

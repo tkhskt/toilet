@@ -8,5 +8,7 @@ Rails.application.routes.draw do
 
   post '/edit', to: "toilets#edit", as: 'edit'
 
+  resource :bookmarks
+
   devise_for :users, controllers: { :omniauth_callbacks => "omniauth_callbacks" }
 end
