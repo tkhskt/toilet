@@ -40,13 +40,11 @@ class SearchController < ApplicationController
                     p["name"] = r.name
                     p["description"] = r.description
                     p["valuation"] = r.valuation
-                    if r.image_path != nil then
-                       logger.debug("ここですね")
-                    end
                     p["icon"] = r.image_path #"https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png"
                 else
                     p["description"] = ""
                     p["valuation"] = 0.0
+                    p["icon"] = "/default.jpg"
                 end
                 @result.push(p)
             end

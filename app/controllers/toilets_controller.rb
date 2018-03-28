@@ -44,8 +44,9 @@ class ToiletsController < ApplicationController
                 @result["description"] = r.description
                 @result["valuation"] = r.valuation
             else
-                @result[index]["description"] = ""
-                @result[index]["valuation"] = 0.0
+                @result["description"] = ""
+                @result["valuation"] = 0.0
+                @result["icon"] = "/default.jpg"
             end
         
             render 'toilets/toilets'
@@ -69,24 +70,25 @@ class ToiletsController < ApplicationController
         toilet = Toilet.new.findToiletsByGoogleId(tId)
         if toilet.nil? then 
             toiletByAPI = Toilet.getToiletInfoByToiletId(tId)
-            Toilet.create(
+            t = Toilet.create(
                 name: toiletByAPI["name"],
                 google_id: tId,
                 lat: toiletByAPI["geometry"]["location"]["lat"],
                 lng: toiletByAPI["geometry"]["location"]["lng"],
                 geolocation: toiletByAPI["formatted_address"],
-                image_path: toiletByAPI["icon"],
                 description: "",
             )
+            t.image_path = Rails.root.join("public/default.jpg").open
+            t.save()
             toilet = Toilet.new.findToiletsByGoogleId(tId)
         end
-        unless params[:image_path].nil? then  
+        unless params[:image_path].blank? then  
             toilet.image_path = params[:image_path]
         end
-        unless params[:toiletName].nil? then
+        if params[:toiletName] != "" then
             toilet.name = params[:toiletName]
         end
-        unless params[:toiletDescription].nil? then
+        if params[:toiletDescription] != "" then
             toilet.description = params[:toiletDescription]
         end
         toilet.save
