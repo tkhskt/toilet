@@ -1,5 +1,6 @@
 class Toilet < ApplicationRecord
     has_many :reviews
+    mount_uploader :image_path, ImageUploader
 
     def findToiletsByGoogleId(toiletId)
         return Toilet.find_by(google_id: toiletId)
@@ -43,8 +44,6 @@ class Toilet < ApplicationRecord
         # URIを解析し、hostやportをバラバラに取得できるようにする
         uri = URI.parse("https://www.geocoding.jp/api/?#{params}")
         # リクエストパラメタを、インスタンス変数に格納
-        logger.debug("ここまで")
-        logger.debug(uri)
         http = Net::HTTP.new(uri.host, uri.port)
         http.use_ssl = true
         http.verify_mode = OpenSSL::SSL::VERIFY_NONE 
@@ -68,4 +67,5 @@ class Toilet < ApplicationRecord
           nil
         end
     end
+
 end

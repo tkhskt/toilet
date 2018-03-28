@@ -11,13 +11,6 @@
         <link rel="stylesheet" type="text/css" href="top.css">
         -->
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-        <script type="text/javascript">
-            $(document).ready(function(){
-                $('#showTextAreaButton').click(function(){
-                    $('#editArea').show();
-                });
-            });
-        </script>
     </head>
     <body>
         
@@ -40,9 +33,10 @@
                     </div>
                     <% if user_signed_in? %>
                         <input type="button" value="編集する" id="showTextAreaButton">
-                        <%= form_tag(edit_path, method: :post,id: "editArea",style: "display: none;") do -%>
+                        <%= form_tag(edit_path, method: :post,id: "editArea",style: "display: none;",:multipart => true) do -%>
                           名前: <%= text_field_tag(:toiletName) %>
                           説明: <%= text_area_tag(:toiletDescription) %>
+                          画像: <%= file_field_tag(:image_path) %>
                           <%= hidden_field_tag :toiletId , @toiletId %>
                           <%= submit_tag "投稿", data: { disable_with: "送信済" }%>
                         <% end -%>
@@ -80,5 +74,12 @@
                 </div>
             
         </div>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $('#showTextAreaButton').click(function(){
+                    $('#editArea').show();
+                });
+            });
+        </script>
     </body>
 </html>

@@ -7,7 +7,6 @@ class ReviewsController < ApplicationController
        
         if t.nil? 
             toiletByGoogle = Toilet.getToiletInfoByToiletId(toiletId)
-            logger.debug(toiletByGoogle)
             Toilet.create(
                 name: toiletByGoogle["name"],
                 google_id: toiletId,

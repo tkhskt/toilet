@@ -37,13 +37,15 @@ class ToiletsController < ApplicationController
             @result = resp["result"]
             
             
-            r = Toilet.findToiletsByGoogleId(placeId)
-            if r != nil then 
-                result["description"] = r.description
-                result["valuation"] = r.valuation
+            r = Toilet.new.findToiletsByGoogleId(placeId)
+            unless r.nil? then 
+                @result["name"] = r.name
+                @result["icon"] = r.image_path
+                @result["description"] = r.description
+                @result["valuation"] = r.valuation
             else
-                result[index]["description"] = ""
-                result[index]["valuation"] = 0.0
+                @result[index]["description"] = ""
+                @result[index]["valuation"] = 0.0
             end
         
             render 'toilets/toilets'
@@ -60,6 +62,33 @@ class ToiletsController < ApplicationController
         end
     end
 
+
+
     def edit
+        tId = params[:toiletId]
+        toilet = Toilet.new.findToiletsByGoogleId(tId)
+        if toilet.nil? then 
+            toiletByAPI = Toilet.getToiletInfoByToiletId(tId)
+            Toilet.create(
+                name: toiletByAPI["name"],
+                google_id: tId,
+                lat: toiletByAPI["geometry"]["location"]["lat"],
+                lng: toiletByAPI["geometry"]["location"]["lng"],
+                geolocation: toiletByAPI["formatted_address"],
+                image_path: toiletByAPI["icon"],
+                description: "",
+            )
+            toilet = Toilet.new.findToiletsByGoogleId(tId)
+        end
+        unless params[:image_path].nil? then  
+            toilet.image_path = params[:image_path]
+        end
+        unless params[:toiletName].nil? then
+            toilet.name = params[:toiletName]
+        end
+        unless params[:toiletDescription].nil? then
+            toilet.description = params[:toiletDescription]
+        end
+        toilet.save
     end
 end
