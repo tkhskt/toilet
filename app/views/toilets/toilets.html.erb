@@ -1,0 +1,142 @@
+<html>
+    <head>
+        <meta charset=“UFT-8”>
+        <title>CSS</title>
+        <%= stylesheet_link_tag 'top', media: 'all', 'data-turbolinks-track': 'reload' %>
+        <%= stylesheet_link_tag 'header', media: 'all', 'data-turbolinks-track': 'reload' %>
+        <%= stylesheet_link_tag 'body', media: 'all', 'data-turbolinks-track': 'reload' %>
+        <!--
+        <link rel="stylesheet" type="text/css" href="header.css">
+        <link rel="stylesheet" type="text/css" href="body.css">
+        <link rel="stylesheet" type="text/css" href="top.css">
+        -->
+        <style>
+            #map {
+              height: 400px;
+              width: 100%;
+             }
+    </style>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    </head>
+    <body>
+        
+        <%= render partial: "components/header" %>
+
+        <div class="toiletDescriptionTextContainer">
+                <div class="toiletDescriptionText">
+                        <h2 class="toiletDescriptionName">
+                                <%= @result["name"] %>
+                        </h2>
+                        <p class="toiletDescriptionAddress">
+                            <%= @result["formatted_address"] %>
+                        </p>
+                </div>     
+        </div>
+        <div class="toiletBodyContainer">
+                
+                <div class="toiletDescriptionContainer">
+                    <div class="toiletInfo">
+                        <%= image_tag @result["icon"], class: 'toiletDescriptionImage' %>
+                        <p class="toiletDescriptionDescription">
+                                <%= @result["description"]%>
+                        </p>
+                    </div>
+                    <div id="map"></div>
+
+                    <%= javascript_tag() do -%>
+                      function initMap() {
+                        var uluru = {lat: <%= @result["geometry"]["location"]["lat"]%>, lng: <%= @result["geometry"]["location"]["lng"]%>};
+                        var map = new google.maps.Map(document.getElementById('map'), {
+                          zoom: 18,
+                          center: uluru
+                        });
+                        var marker = new google.maps.Marker({
+                          position: uluru,
+                          map: map
+                        });
+                      }
+                    <% end -%>
+
+                    <script async defer
+                        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD6pvQJvfU75uOpTGUsdKlWk5tPIfFrIH8&callback=initMap">
+                    </script>
+
+                    <% if user_signed_in? %>
+                        <div class="buttonContainer">
+                            <%= form_tag(bookmarks_path, method: :post, id: "bookmarkButton") do -%>
+                                <%= hidden_field_tag :toiletId , @toiletId %>
+                                <%= submit_tag "お気に入り登録", data: { disable_with: "送信済" }, id: :bookmarkSubmitButton %>
+                            <% end -%>
+
+                            <input type="button" value="編集する" id="showTextAreaButton">
+                        </div> 
+                        <%= form_tag(edit_path, method: :post,id: "editArea",style: "display: none;",:multipart => true) do -%>
+                            <p class="toilet">トイレの名前</p>
+                            <%= text_field_tag(:toiletName, "",class: :nameField) %>
+                            <p class="toilet">トイレの説明</p>
+                            <%= text_area_tag(:toiletDescription, "",class: :descriptionField) %>
+                            <%= file_field_tag(:image_path) %>
+                          <%= hidden_field_tag :toiletId , @toiletId %>
+                          <%= submit_tag "投稿", data: { disable_with: "送信済" },id: :submitDescriptionButton %>
+                        <% end -%>
+                        
+                    <% end %>
+                    <% if user_signed_in? %>
+                    <div class="postReviewContainer">
+                        <p class="postReviewTitle">レビュー</p>
+                            <%= form_tag(reviews_path, method: :post) do -%>
+                              <%= select_tag :valuation, options_for_select(["1", "2", "3", "4", "5"]), id: :valuationInput %>
+                              <%= text_area_tag(:message,"",id: :reviewMessage) %>
+                              <%= hidden_field_tag :toiletId , @toiletId %>
+                              <%= submit_tag "投稿", data: { disable_with: "送信済" }, id: :submitReviewButton %>
+                            <% end -%>
+                        </div>
+                    <% end %>
+
+                    <div class="toiletReviewsContainer">
+                        <ul class="toiletDescriptionReviewsList">
+                            <% @reviews.each do |r| %>
+                                <li class="toiletDescriptionReviewContent">
+                                    <%= image_tag r["image_url"], id: :userIcon%>
+                                    <div class="userReviewTextContainer">
+                                            <p class="reviewerName"> 
+                                                <%= r["username"] %>
+                                            </p>
+                                            <div class="valuation">
+                                                <%= r["valuation"] %>
+                                            </div>
+                                            <div class="reviewText">
+                                                <%= r["message"]%>
+                                            </div>
+                                    </div>
+                                </li>
+                            <% end %>
+                        </ul>
+                    </div>
+                </div>
+                <div class="nearToiletsContainer">
+                    <h3>周辺のトイレ</h3>
+                    <ul>
+                        <% @list.each do |r| %>
+                        <li class="nearToiletContent">
+                            <%= image_tag r["icon"], class: 'nearToiletContentImage' %>
+                            <div class="toiletText">
+                                <p class="toiletName">
+                                    <%= link_to(r["name"], toilet_path(r["place_id"]))%>
+                                </p>
+                            </div>
+                        </li>
+                        <% end %>
+                    </ul>
+                </div>
+            
+        </div>
+        <%= javascript_tag() do -%>
+            $(document).ready(function(){
+                $('#showTextAreaButton').click(function(){
+                    $('#editArea').show();
+                });
+            });
+        <% end -%>
+    </body>
+</html>
