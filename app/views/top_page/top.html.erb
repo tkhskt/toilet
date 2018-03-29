@@ -15,7 +15,7 @@
         <%= render partial: "components/topHeader" %>
         <div class="topHeaderContainer">
             <div class="topHeaderContents">
-                    <p id="natureCallMe">Nature Call Me</p>
+                    <p id="natureCallMe">Nature Calls Me</p>
                     <div class="topHeaderFormContainer">
                         <%= form_tag("/search", method: "get", id: "topHeaderForm") do %>
                             <%= text_field_tag(:keyword, "",id: "topHeaderTextField",placeholder: "地名を入力") %>
