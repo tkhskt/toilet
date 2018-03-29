@@ -1,22 +1,7 @@
 class ToiletsController < ApplicationController
     def description
         placeId = params[:id]
-        key = ENV["GOOGLE_KEY"]
-        # hash形式でパラメタ文字列を指定し、URL形式にエンコード
-        params = URI.encode_www_form({placeid: placeId,key: key})
-        # URIを解析し、hostやportをバラバラに取得できるようにする
-        uri = URI.parse("https://maps.googleapis.com/maps/api/place/details/json?#{params}")
-        # リクエストパラメタを、インスタンス変数に格納
         
-        http = Net::HTTP.new(uri.host, uri.port)
-        http.use_ssl = true
-        http.verify_mode = OpenSSL::SSL::VERIFY_NONE 
-        response = http.start do |h|
-          h.open_timeout = 5
-          h.read_timeout = 10
-          h.get(uri.request_uri)
-        end
-       
         @toiletId = placeId
         toilet = Toilet.find_by(google_id: placeId)
         @reviews = []
@@ -28,46 +13,31 @@ class ToiletsController < ApplicationController
               )
             @reviews = res.as_json
         end    
-    
-
-        begin
-          case response
-          when Net::HTTPSuccess # 結果の受け取り
-            resp = JSON.load(response.body)
-            @result = resp["result"]
-            
-            r = Toilet.new.findToiletsByGoogleId(placeId)
-            unless r.nil? then 
-                value = Review.new.calcValuationByToiletId(r.id)
-                @result["name"] = r.name
-                @result["icon"] = r.image_path
-                @result["description"] = r.description
-                @result["valuation"] = value
-                r.valuation = value
-                @valueImg = Review.new.getStarPathByValuation(value)
-                r.save
-            else
-                @result["description"] = ""
-                @result["valuation"] = 0.0
-                @result["icon"] = "/default.jpg"
-                @valueImg = "1_star.png"
-            end
-            
-            @list = Toilet.new.getToiletList(@result["geometry"]["location"]["lat"],@result["geometry"]["location"]["lng"])
-            
-
-            render 'toilets/toilets'
-          when Net::HTTPRedirection
-            message = "Redirection: code=#{response.code} message=#{response.message}"
-            render 'toilets/toilets'
-          else
-            message = "HTTP ERROR: code=#{response.code} message=#{response.message}"
-            render 'toilets/toilets'
-          end
-        rescue => e
-          logger.debug(e)
-          render 'toilets/toilets'
+        
+        resp = JSON.load(response.body)
+        @result = Toilet.getToiletInfoByToiletId(placeId)
+        
+        r = Toilet.new.findToiletsByGoogleId(placeId)
+        unless r.nil? then 
+            value = Review.new.calcValuationByToiletId(r.id)
+            @result["name"] = r.name
+            @result["icon"] = r.image_path
+            @result["description"] = r.description
+            @result["valuation"] = value
+            r.valuation = value
+            @valueImg = Review.new.getStarPathByValuation(value)
+            r.save
+        else
+            @result["description"] = ""
+            @result["valuation"] = 0.0
+            @result["icon"] = "/default.jpg"
+            @valueImg = "1_star.png"
         end
+        
+        @list = Toilet.getToiletList(@result["geometry"]["location"]["lat"],@result["geometry"]["location"]["lng"])
+        
+        render 'toilets/toilets'
+          
     end
 
 

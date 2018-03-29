@@ -73,7 +73,7 @@ class Toilet < ApplicationRecord
         end
     end
 
-    def getToiletList(lat,lng)
+    def self.getToiletList(lat,lng)
         
         key = ENV["GOOGLE_KEY"]
         location = "#{lat},#{lng}"
