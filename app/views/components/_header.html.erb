@@ -4,14 +4,13 @@
                     <%= link_to "トイレビュー", "/", class: :headerLink, id: :headerTitle %>
                 </div>
                 <%= form_tag("/search", method: "get", id: "form02") do %>
-                  <%= text_field_tag(:keyword, "",id:'input02') %>
+                  <%= text_field_tag(:keyword, "",id:'input02', placeholder: "地名を入力") %>
                 <% end %>
                 <nav>
                     <% if user_signed_in? %>
                         <%= link_to 'お気に入り', bookmarks_path, method: :get, id: :headerFav %>
                         <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, id: :headerLogout %>
                     <% else %>
-                        <%= link_to 'サインアップ', new_user_registration_path , id: :headerSignUp%>
                         <%= link_to 'ログイン', new_user_session_path, id: :headerLogin %>
                     <% end %>
                 </nav>            

@@ -12,7 +12,19 @@
         -->
     </head>
     <body>
-        <%= render partial: "components/header" %>
+        <%= render partial: "components/topHeader" %>
+        <div class="topHeaderContainer">
+            <div class="topHeaderContents">
+                    <p id="natureCallMe">Nature Call Me</p>
+                    <div class="topHeaderFormContainer">
+                        <%= form_tag("/search", method: "get", id: "topHeaderForm") do %>
+                            <%= text_field_tag(:keyword, "",id: "topHeaderTextField",placeholder: "地名を入力") %>
+                            <%= submit_tag "検索", id: "topHeaderSubmitButton" %>
+                        <% end %>
+                    </div>
+            </div>  
+        </div>
+
         <div class="bodyContainer">
                 <div class="pupularToilet">
                     <h2 class="trendTitle">トレンド</h2>

@@ -1,0 +1,15 @@
+<div class="header">
+        <div class="headerContainer">
+            <div class="headerTitle">
+                <%= link_to "トイレビュー", "/", class: :headerLink, id: :headerTitle %>
+            </div>
+            <nav>
+                <% if user_signed_in? %>
+                    <%= link_to 'お気に入り', bookmarks_path, method: :get, id: :headerFav %>
+                    <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, id: :headerLogout %>
+                <% else %>
+                    <%= link_to 'ログイン', new_user_session_path, id: :headerLogin %>
+                <% end %>
+            </nav>            
+        </div>
+</div>
