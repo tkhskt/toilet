@@ -5,6 +5,21 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
+# 認証関係
+gem 'devise'
+gem 'omniauth-twitter'
+
+# xmlパーサ
+gem 'activesupport'
+gem 'xml-simple'
+
+# token等の管理
+gem 'dotenv-rails'
+
+# 画像アップロード
+gem 'carrierwave'
+
+# mysqlドライバ
 gem 'mysql2', '~> 0.4.0'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.5'

@@ -74,3 +74,23 @@ img.userImage {
 p.userName {
     margin-left: 10px;
 }
+
+p.listValutaionContainer {
+    color: darkorange;
+}
+
+p.reviewerName {
+    margin-bottom: 2px;
+    font-weight: bold;
+}
+
+p.valuation {
+    margin: 2px;
+    color: darkorange;
+}
+
+p.reviewText {
+    padding-bottom: 10px;
+    margin-bottom: 0;
+    margin-top: 2px;
+}

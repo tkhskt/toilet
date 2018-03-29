@@ -1,0 +1,45 @@
+<html>
+    <head>
+        <meta charset=“UFT-8”>
+        <title>CSS</title>
+        <%= stylesheet_link_tag 'top', media: 'all', 'data-turbolinks-track': 'reload' %>
+        <%= stylesheet_link_tag 'header', media: 'all', 'data-turbolinks-track': 'reload' %>
+        <%= stylesheet_link_tag 'body', media: 'all', 'data-turbolinks-track': 'reload' %>
+        <!--
+        <link rel="stylesheet" type="text/css" href="header.css">
+        <link rel="stylesheet" type="text/css" href="body.css">
+        <link rel="stylesheet" type="text/css" href="top.css">
+        -->
+    </head>
+    <body>
+        <%= render partial: "components/header" %>
+
+        <div class="bodyContainer">
+                <div class="pupularToilet">
+                    <p>
+                        <%= @name %>さんのお気に入り
+                    </p>
+                    <ul class="popularToiletList">
+                        <% @bookmarks.each do |r| %>
+                            <li class="pupularToiletContent">
+                                <%= image_tag r["icon"], class: 'toiletImage' %>
+                                <div class="toiletText">
+                                    <p class="toiletName">
+                                        <%= link_to(r["name"], toilet_path(r["google_id"]))%>
+                                    </p>
+                                    <p class="listValutaionContainer">
+                                        <%= r["valuation"] %>
+                                    </p>
+                                    <div class="toiletDescription">
+                                        <%= r["description"] %>
+                                    </div>
+                                </div>
+                            </li>
+                        <% end %>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    
+    </body>
+</html>

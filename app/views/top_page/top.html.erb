@@ -12,73 +12,27 @@
         -->
     </head>
     <body>
-        <div class="header">
-            <div class="headerContainer">
-                <div class="headerTitle">
-                    トイレビュー
-                </div>
-                <!--
-                <form id="form02" action="#">
-                    <input id="input02" type="text" placeholder="検索">
-                    <input id="submit02" type="submit" value="">
-                </form>
-                -->
-               
-                <%= form_tag("/search", method: "get", id: "form02") do %>
-                  <%= text_field_tag(:keyword, "",id:'input02') %>
-                <% end %>
-                
-            </div>
-        </div>
-
+        <%= render partial: "components/header" %>
         <div class="bodyContainer">
                 <div class="pupularToilet">
                     <h2 class="trendTitle">トレンド</h2>
                     <ul class="popularToiletList">
-                        <li class="pupularToiletContent">
-                                <img class="toiletImage" src="toilet_sample.jpg"/>
+                        <% @result.each do |r| %>
+                            <li class="pupularToiletContent">
+                                <%= image_tag r["icon"], class: 'toiletImage' %>
                                 <div class="toiletText">
                                     <p class="toiletName">
-                                        駅前トイレ
+                                        <%= link_to(r["name"], toilet_path(r["google_id"]))%>
+                                    </p>
+                                    <p class="listValutaionContainer">
+                                        <%= r["valuation"] %>
                                     </p>
                                     <div class="toiletDescription">
-                                        まあまあ綺麗だがそこはかとなく臭う
+                                        <%= r["description"] %>
                                     </div>
                                 </div>
-                        </li>
-                        <li class="pupularToiletContent">
-                                <img class="toiletImage" src="toilet_sample.jpg"/>
-                                <div class="toiletText">
-                                    <p class="toiletName">
-                                        駅前トイレ
-                                    </p>
-                                    <div class="toiletDescription">
-                                        まあまあ綺麗だがそこはかとなく臭う
-                                    </div>
-                                </div>
-                        </li>
-                        <li class="pupularToiletContent">
-                                <img class="toiletImage" src="toilet_sample.jpg"/>
-                                <div class="toiletText">
-                                    <p class="toiletName">
-                                        駅前トイレ
-                                    </p>
-                                    <div class="toiletDescription">
-                                        まあまあ綺麗だがそこはかとなく臭う
-                                    </div>
-                                </div>
-                        </li>
-                        <li class="pupularToiletContent">
-                                <img class="toiletImage" src="toilet_sample.jpg"/>
-                                <div class="toiletText">
-                                    <p class="toiletName">
-                                        駅前トイレ
-                                    </p>
-                                    <div class="toiletDescription">
-                                        まあまあ綺麗だがそこはかとなく臭う
-                                    </div>
-                                </div>
-                        </li>
+                            </li>
+                        <% end %>
                     </ul>
                 </div>
                 <div class="userRanking">

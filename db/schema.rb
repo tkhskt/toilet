@@ -10,14 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180327013809) do
+ActiveRecord::Schema.define(version: 20180329055243) do
 
   create_table "reviews", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "toilet_id", null: false
     t.integer "user_id", null: false
     t.float "valuation", limit: 24
     t.string "message"
-    t.datetime "updated_at", null: false
     t.datetime "created_at", null: false
   end
 
@@ -27,9 +26,9 @@ ActiveRecord::Schema.define(version: 20180327013809) do
     t.float "lat", limit: 24, null: false
     t.float "lng", limit: 24, null: false
     t.string "geolocation"
-    t.string "image_path"
+    t.string "image_path", default: "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png"
     t.string "description"
-    t.float "valuation", limit: 24
+    t.float "valuation", limit: 24, default: 0.0
     t.datetime "updated_at", null: false
     t.datetime "created_at", null: false
   end
@@ -39,6 +38,22 @@ ActiveRecord::Schema.define(version: 20180327013809) do
     t.string "icon_path"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer "sign_in_count", default: 0, null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string "current_sign_in_ip"
+    t.string "last_sign_in_ip"
+    t.string "provider"
+    t.string "uid"
+    t.string "username"
+    t.string "image_url"
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   create_table "users_toilets", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
