@@ -94,5 +94,6 @@ class ToiletsController < ApplicationController
             toilet.description = params[:toiletDescription]
         end
         toilet.save
+        redirect_to "/toilet/#{tId}"
     end
 end

@@ -29,6 +29,7 @@ class ReviewsController < ApplicationController
             valuation: valuation,
             message: message,
         )
+        redirect_to "/toilet/#{toiletId}"
     end
     def after_update_path_for(resource)
     end

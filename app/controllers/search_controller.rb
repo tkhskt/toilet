@@ -5,9 +5,17 @@ class SearchController < ApplicationController
         keyword = params[:keyword]
         key = ENV["GOOGLE_KEY"]
         geoPoint = Toilet.getPlaceByKeyWord(keyword)
-        lat = geoPoint["coordinate"][0]["lat"][0]
-        lng = geoPoint["coordinate"][0]["lng"][0]
-        location = lat + "," + lng
+        if geoPoint["error"].nil? then
+            lat = geoPoint["coordinate"][0]["lat"][0]
+            lng = geoPoint["coordinate"][0]["lng"][0]
+            location = lat + "," + lng
+        else 
+            @query = "#{keyword}の検索結果"
+            @result = []
+            render 'search/search'
+            return
+        end
+        
         
 
         # hash形式でパラメタ文字列を指定し、URL形式にエンコード
