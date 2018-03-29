@@ -65,7 +65,7 @@
                         <div class="buttonContainer">
                             <%= form_tag(bookmarks_path, method: :post, id: "bookmarkButton") do -%>
                                 <%= hidden_field_tag :toiletId , @toiletId %>
-                                <%= submit_tag "ブックマーク", data: { disable_with: "送信済" }, id: :bookmarkSubmitButton %>
+                                <%= submit_tag "お気に入り登録", data: { disable_with: "送信済" }, id: :bookmarkSubmitButton %>
                             <% end -%>
 
                             <input type="button" value="編集する" id="showTextAreaButton">

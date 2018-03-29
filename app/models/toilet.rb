@@ -3,8 +3,13 @@ class Toilet < ApplicationRecord
     mount_uploader :image_path, ImageUploader
 
     def findToiletsByGoogleId(toiletId)
-        return Toilet.find_by(google_id: toiletId)
+        Toilet.find_by(google_id: toiletId)
     end
+
+    def findToiletById(id)
+        Toilet.find_by(id: id)
+    end
+
     def self.getToiletInfoByToiletId(placeId)
         key = ENV["GOOGLE_KEY"]
         # hash形式でパラメタ文字列を指定し、URL形式にエンコード

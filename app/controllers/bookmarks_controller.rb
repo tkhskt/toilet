@@ -32,4 +32,28 @@ class BookmarksController < ApplicationController
     def destroy
 
     end
+
+    def show
+        userId = current_user.id
+        @name = current_user.username
+        jsonResult = UsersToilet.new.getBookmarkIds(userId).to_json
+        ids = JSON.parse(jsonResult)
+        toiletIds = []
+        logger.debug(ids)
+        ids.each do |v|
+            toiletIds.push(v["toilet_id"])
+        end
+        toilets = []
+        toiletIds.each do |v|
+            toilets.push(Toilet.new.findToiletById(v))
+        end
+        @bookmarks = []
+        toilets.each do |v| 
+            p = JSON.parse(v.to_json)
+            p["icon"] = v.image_path
+            @bookmarks.push(p)
+        end
+
+        render 'bookmarks/bookmarks'
+    end
 end
