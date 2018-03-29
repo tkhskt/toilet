@@ -8,18 +8,17 @@ class ReviewsController < ApplicationController
         if t.nil? then
             toiletByGoogle = Toilet.getToiletInfoByToiletId(toiletId)
             
-            Toilet.create(
+            newToilet = Toilet.create(
                 name: toiletByGoogle["name"],
                 google_id: toiletId,
                 lat: toiletByGoogle["geometry"]["location"]["lat"],
                 lng: toiletByGoogle["geometry"]["location"]["lng"],
                 geolocation: toiletByGoogle["formatted_address"],
-                image_path: toiletByGoogle["icon"],
                 description: "",
                 valuation: valuation,
             )
-            t.image_path = Rails.root.join("public/default.jpg").open
-            t.save()
+            newToilet.image_path = Rails.root.join("public/default.jpg").open
+            newToilet.save()
         end
         t = Toilet.find_by(google_id: toiletId)
 

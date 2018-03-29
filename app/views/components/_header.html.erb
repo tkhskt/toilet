@@ -1,18 +1,18 @@
 <div class="header">
             <div class="headerContainer">
                 <div class="headerTitle">
-                    <%= link_to "トイレビュー", "/"%>
+                    <%= link_to "トイレビュー", "/", class: :headerLink, id: :headerTitle %>
                 </div>
                 <%= form_tag("/search", method: "get", id: "form02") do %>
                   <%= text_field_tag(:keyword, "",id:'input02') %>
                 <% end %>
                 <nav>
                     <% if user_signed_in? %>
-                        <%= link_to 'お気に入り', bookmarks_path, method: :get %>
-                        <%= link_to 'ログアウト', destroy_user_session_path, method: :delete %>
+                        <%= link_to 'お気に入り', bookmarks_path, method: :get, id: :headerFav %>
+                        <%= link_to 'ログアウト', destroy_user_session_path, method: :delete, id: :headerLogout %>
                     <% else %>
-                        <%= link_to 'サインアップ', new_user_registration_path %>
-                        <%= link_to 'ログイン', new_user_session_path %>
+                        <%= link_to 'サインアップ', new_user_registration_path , id: :headerSignUp%>
+                        <%= link_to 'ログイン', new_user_session_path, id: :headerLogin %>
                     <% end %>
                 </nav>            
             </div>

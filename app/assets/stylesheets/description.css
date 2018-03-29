@@ -215,3 +215,18 @@ li.toiletDescriptionReviewContent {
 div.userReviewTextContainer {
     padding-left: 10px;
 }
+
+div.descriptionValueContainer {
+    display: flex;
+}
+
+img.descriptionValueImage {
+    margin-top: auto;
+    margin-bottom: auto;
+    height: 40px;
+}
+
+h2.toiletValuation {
+    margin-left: 10px;
+    color: darkorange;
+}

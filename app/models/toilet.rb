@@ -126,4 +126,8 @@ class Toilet < ApplicationRecord
         end
     end
 
+    def getPopularToilets
+        Toilet.select(Arel.star).order(:valuation).reverse_order.limit(20)
+    end
+
 end

@@ -25,8 +25,15 @@
         <div class="toiletDescriptionTextContainer">
                 <div class="toiletDescriptionText">
                         <h2 class="toiletDescriptionName">
-                                <%= @result["name"] %>
+                            <%= @result["name"] %>
                         </h2>
+                        <div class="descriptionValueContainer">
+                            <%= image_tag @valueImg ,class: "descriptionValueImage"%>
+                            <h2 class="toiletValuation">
+                                <%= @result["valuation"] %>
+                            </h2>
+                        </div>
+                        
                         <p class="toiletDescriptionAddress">
                             <%= @result["formatted_address"] %>
                         </p>
@@ -102,12 +109,12 @@
                                             <p class="reviewerName"> 
                                                 <%= r["username"] %>
                                             </p>
-                                            <div class="valuation">
+                                            <p class="valuation">
                                                 <%= r["valuation"] %>
-                                            </div>
-                                            <div class="reviewText">
+                                            </p>
+                                            <p class="reviewText">
                                                 <%= r["message"]%>
-                                            </div>
+                                            </p>
                                     </div>
                                 </li>
                             <% end %>

@@ -20,7 +20,7 @@ class ToiletsController < ApplicationController
         @toiletId = placeId
         toilet = Toilet.find_by(google_id: placeId)
         @reviews = []
-        if !toilet.nil? 
+        unless toilet.nil? then
             res = Review.select(Arel.star).where(Review.arel_table[:toilet_id].eq(toilet.id)).joins(
                 Review.arel_table.join(User.arel_table).on(
                   User.arel_table[:id].eq(Review.arel_table[:user_id])
@@ -28,7 +28,7 @@ class ToiletsController < ApplicationController
               )
             @reviews = res.as_json
         end    
-        
+    
 
         begin
           case response
@@ -36,21 +36,26 @@ class ToiletsController < ApplicationController
             resp = JSON.load(response.body)
             @result = resp["result"]
             
-            
             r = Toilet.new.findToiletsByGoogleId(placeId)
             unless r.nil? then 
+                value = Review.new.calcValuationByToiletId(r.id)
                 @result["name"] = r.name
                 @result["icon"] = r.image_path
                 @result["description"] = r.description
-                @result["valuation"] = r.valuation
+                @result["valuation"] = value
+                r.valuation = value
+                @valueImg = Review.new.getStarPathByValuation(value)
+                r.save
             else
                 @result["description"] = ""
                 @result["valuation"] = 0.0
                 @result["icon"] = "/default.jpg"
+                @valueImg = "1_star.png"
             end
             
             @list = Toilet.new.getToiletList(@result["geometry"]["location"]["lat"],@result["geometry"]["location"]["lng"])
-        
+            
+
             render 'toilets/toilets'
           when Net::HTTPRedirection
             message = "Redirection: code=#{response.code} message=#{response.message}"
