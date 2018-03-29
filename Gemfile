@@ -19,6 +19,9 @@ gem 'dotenv-rails'
 # 画像アップロード
 gem 'carrierwave'
 
+# line bot用
+gem 'line-bot-api'
+
 # mysqlドライバ
 gem 'mysql2', '~> 0.4.0'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
