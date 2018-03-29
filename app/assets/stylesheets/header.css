@@ -64,6 +64,7 @@ a#headerTitle {
 
 #headerFav {
     color: white;
+    padding-right: 10px;
 }
 
 #headerLogout {
@@ -71,6 +72,7 @@ a#headerTitle {
 }
 
 #headerSignUp {
+    padding-right: 10px;
     color: white;
 }
 

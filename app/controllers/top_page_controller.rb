@@ -1,5 +1,6 @@
 class TopPageController < ApplicationController
     def index
+        @topUser = User.getPopularUsers()
         toilets = Toilet.new.getPopularToilets()
         @result = []
         toilets.each do |v| 

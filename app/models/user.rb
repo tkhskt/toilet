@@ -23,6 +23,19 @@ class User < ApplicationRecord
           super
       end
   end
+
+  def self.getPopularUsers
+    Review.select(
+        [
+          Arel.star.count, User.arel_table[:username], User.arel_table[:image_url]
+        ]
+      ).joins(
+        Review.arel_table.join(User.arel_table).on(
+          Review.arel_table[:user_id].eq(User.arel_table[:id])
+        ).join_sources
+      ).order(Arel.star.count).reverse_order.group(:user_id).limit(10)
+  end
+
   def password_required?
     super && provider.blank?
   end

@@ -23,6 +23,7 @@ img.toiletImage {
 
 p.toiletName {
     font-size: 1.3em;
+    font-weight: bold;
 }
 
 div.bodyContainer {
@@ -77,6 +78,8 @@ p.userName {
 
 p.listValutaionContainer {
     color: darkorange;
+    margin-top: 0;
+    font-weight: bold;
 }
 
 p.reviewerName {
@@ -93,4 +96,9 @@ p.reviewText {
     padding-bottom: 10px;
     margin-bottom: 0;
     margin-top: 2px;
+}
+
+span#v {
+    color: black;
+    font-weight: normal;
 }

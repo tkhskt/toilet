@@ -15,8 +15,9 @@ class SearchController < ApplicationController
             render 'search/search'
             return
         end
-         @result = Toilet.getToiletList(lat,lng)
-         @query = "#{keyword}の検索結果"
-         render 'search/search'
+        @topUser = User.getPopularUsers()
+        @result = Toilet.getToiletList(lat,lng)
+        @query = "#{keyword}の検索結果"
+        render 'search/search'
     end
 end
