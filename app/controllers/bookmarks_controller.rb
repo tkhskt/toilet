@@ -30,7 +30,10 @@ class BookmarksController < ApplicationController
     end
 
     def destroy
-
+        toilet_id = Toilet.find_by(google_id: params[:toiletId])
+        userId = current_user.id
+        UsersToilet.where(toilet_id: toilet_id, user_id: userId).first.destroy
+        redirect_to "/bookmarks"
     end
 
     def show

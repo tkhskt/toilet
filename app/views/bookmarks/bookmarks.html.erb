@@ -33,7 +33,11 @@
                                     <div class="toiletDescription">
                                         <%= r["description"] %>
                                     </div>
+                                    <%= form_tag(bookmarks_path, method: :delete, id: "removeBookmarkButton") do -%>
+                                     <%= hidden_field_tag :toiletId , r["google_id"] %>
+                                    <%= submit_tag "お気に入り解除", data: { disable_with: "送信済" }, id: :bookmarkRemoveButton %>
                                 </div>
+                            <% end -%>
                             </li>
                         <% end %>
                     </ul>
