@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema.define(version: 20180329055243) do
 
-  create_table "reviews", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "reviews", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.integer "toilet_id", null: false
     t.integer "user_id", null: false
     t.float "valuation", limit: 24
@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(version: 20180329055243) do
     t.datetime "created_at", null: false
   end
 
-  create_table "toilets", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "toilets", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.string "name"
     t.string "google_id"
     t.float "lat", limit: 24, null: false
@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(version: 20180329055243) do
     t.datetime "created_at", null: false
   end
 
-  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.string "name"
     t.string "icon_path"
     t.datetime "created_at", null: false
@@ -56,7 +56,7 @@ ActiveRecord::Schema.define(version: 20180329055243) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  create_table "users_toilets", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "users_toilets", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.integer "user_id", null: false
     t.integer "toilet_id", null: false
     t.datetime "created_at", null: false

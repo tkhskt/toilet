@@ -16,4 +16,4 @@ scrape_configs:
     scrape_interval: 5s
 
     static_configs:
-      - targets: ['cadvisor:8080']
+      - targets: ['192.168.2.191:8080']

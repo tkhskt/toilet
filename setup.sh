@@ -1,2 +1,2 @@
-bundle exec rails db:migrate ||
+bundle install &&
 bundle exec rails s

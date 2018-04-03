@@ -7,7 +7,7 @@
 development: &default
   adapter: mysql2
   encoding: utf8
-  database: toilet_development
+  database: toilet
   pool: 5
   username: root
   password: secret

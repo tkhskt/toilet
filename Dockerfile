@@ -4,6 +4,9 @@ RUN mkdir /app
 WORKDIR /app
 COPY Gemfile Gemfile
 COPY Gemfile.lock Gemfile.lock
+RUN bundle pack
+RUN bundle install --path=vendor/bundle
+RUN bundle install --path vendor/cache
 RUN bundle install
 
 ADD . /app
