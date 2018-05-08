@@ -1,24 +1,24 @@
-# README
+# toilet
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+キーワードから周辺のトイレを表示するWebアプリです。
 
-Things you may want to cover:
+## feature
 
-* Ruby version
+- キーワードから周辺のトイレを検索し、表示します。
+- トイレのレビューを投稿することができます。
+- Twitterログインができます。
+- Line botを提供しています。
+- 写真を投稿することができます。
+- トイレの情報をユーザーが更新できます。
 
-* System dependencies
+## requirements
 
-* Configuration
+- docker
+- docker-compose
 
-* Database creation
+## install
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+1. `git clone https://github.com/gericass/toilet`
+2. `cd toilet`
+3. `make docker-init`
+4. `docker-compose up -d`
